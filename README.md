@@ -111,23 +111,17 @@ dnf --repo=rpmfusion-nonfree-tainted install "*-firmware"
 
 # What things I need to do on a computer
 ## Web browsing
-Browse the web.
-### Tools required
 - [Brave Browser](https://brave.com/linux/)
 - KeePassXC : `sudo dnf install -y keepassxc` <br>
 (needs [Sync stuff](#sync-stuff))
 
 ## Notetaking
-Take notes.
-### Tools required
 - [Obsidian](https://obsidian.md/download)
 
 ## Sync stuff
 <a id="sync-stuff"></a>
-Sync everything.
-### Tools required
 - Syncthing : `sudo dnf install -y syncthing` <br>
-Enable the service :
+- Enable the service :
 ```
 systemctl --user --now enable syncthing.service
 ```
@@ -140,15 +134,13 @@ Do basic word processing, presentation and worksheet creation.
 - [OpenBangla Keyboard](https://github.com/OpenBangla/OpenBangla-Keyboard/tree/e050df46b20d665cc564f90261c6c6c3f1e90008/tools/make-pkgs)
 - [Microsoft Office](https://massgrave.dev) (inside a VM)
 - [Zotero 7 (unofficial)](https://github.com/ryuuzaki42/Zotero_AppImage) <br>
-If you encounter the error :
+If you encounter the error with Zotero 7 :
 ```
 libdbus-glib-1.so.2: cannot open shared object file: No such file or directory Couldn't load XPCOM
 ```
 Install `dbus-glib` : `sudo dnf install -y dbus-glib`
 
 ## Graphics Design
-Edit photos, create vector art.
-### Tools required
 - Krita : `sudo dnf install -y krita`
 - GIMP : `sudo dnf install -y gimp`
 - Affinity Suite (inside a VM)
@@ -156,14 +148,12 @@ Edit photos, create vector art.
 ## Virtual machines
 Create and run VMs for Windows-only tools.
 ### Tools required
-- virt-manager : : `sudo dnf install -y virt-manager` (needs additional setup, unfinished)
+- virt-manager : `sudo dnf install -y virt-manager` <br> (needs additional setup, unfinished)
 - [Windows virtIO guest drivers](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/) (download iso)
 - RDP (optional)
 - Intel iGPU SRIOV (someday soon)
-
+- [VMWare Workstation](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion) ([Mirror](https://www.techspot.com/downloads/189-vmware-workstation-for-windows.html)) (offers full DirectX acceleraion, better and faster, but you lose secure boot)
 ## Rust development
-Create and run rust programs.
-### Tools required
 - [Visual Studio Code](https://code.visualstudio.com/download)
 - git : `sudo dnf install -y git`
 - rust & rust-analyzer : `sudo dnf install -y rust rust-analyzer`
