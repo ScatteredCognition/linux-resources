@@ -32,7 +32,9 @@ run0 dnf install -y fish
 
 Set `fish` as the default shell for current user.
 ```
-usermod -s /usr/bin/fish $USER
+echo "$USER" > username.txt
+run0 usermod -s /usr/bin/fish $(cat username.txt)
+rm -f username.txt
 ```
 
 Configure `fish`
