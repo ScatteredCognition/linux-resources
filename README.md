@@ -116,13 +116,13 @@ dnf --repo=rpmfusion-nonfree-tainted install "*-firmware"
 - [Brave Browser](https://brave.com/linux/) <br>
 Add `--enable-features=TouchpadOverscrollHistoryNavigation` for touchpad gestures. <br>
 Change flags in `chrome://flags` for Wayland support & Middle-click scroll.
-- KeePassXC : `sudo dnf install -y keepassxc` or 'flatpak install -y org.keepassxc.KeePassXC' <br>
+- KeePassXC : `sudo dnf install -y keepassxc` or 'flatpak install -y org.keepassxc.KeePassXC` <br>
 (needs [Sync stuff](#sync-stuff))
 
 ## Notetaking
 - [Obsidian](https://obsidian.md/download) <br>
 Add `--ozone-platform-hint=auto` for Wayland support. <br>
-Add '--enable-wayland-ime` for ibus/fcitx support.
+Add `--enable-wayland-ime` for ibus/fcitx support.
 
 ## Sync stuff
 <a id="sync-stuff"></a>
@@ -162,7 +162,7 @@ Create and run VMs for Windows-only tools.
 ## Rust development
 - [Visual Studio Code](https://code.visualstudio.com/download) <br>
 Add `--ozone-platform-hint=auto` for Wayland support. <br>
-Add '--enable-wayland-ime` for ibus/fcitx support.
+Add `--enable-wayland-ime` for ibus/fcitx support.
 - git : `sudo dnf install -y git`
 - rust & rust-analyzer : `sudo dnf install -y rust rust-analyzer`
 
