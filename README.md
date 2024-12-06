@@ -116,7 +116,8 @@ dnf --repo=rpmfusion-nonfree-tainted install "*-firmware"
 (needs [Sync stuff](#sync-stuff))
 
 ## Notetaking
-- [Obsidian](https://obsidian.md/download)
+- [Obsidian](https://obsidian.md/download) <br>
+Add `--ozone-platform-hint=auto` for Wayland support.
 
 ## Sync stuff
 <a id="sync-stuff"></a>
@@ -154,7 +155,8 @@ Create and run VMs for Windows-only tools.
 - Intel iGPU SRIOV (someday soon)
 - [VMWare Workstation](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion) ([Mirror](https://www.techspot.com/downloads/189-vmware-workstation-for-windows.html)) (offers full DirectX acceleraion, better and faster, but you lose secure boot)
 ## Rust development
-- [Visual Studio Code](https://code.visualstudio.com/download)
+- [Visual Studio Code](https://code.visualstudio.com/download) <br>
+Add `--ozone-platform-hint=auto` for Wayland support.
 - git : `sudo dnf install -y git`
 - rust & rust-analyzer : `sudo dnf install -y rust rust-analyzer`
 
