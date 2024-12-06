@@ -115,13 +115,14 @@ dnf --repo=rpmfusion-nonfree-tainted install "*-firmware"
 ## Web browsing
 - [Brave Browser](https://brave.com/linux/) <br>
 Add `--enable-features=TouchpadOverscrollHistoryNavigation` for touchpad gestures. <br>
-Change Wayland flags from `chrome://flags` for Wayland support.
-- KeePassXC : `sudo dnf install -y keepassxc` <br>
+Change flags in `chrome://flags` for Wayland support & Middle-click scroll.
+- KeePassXC : `sudo dnf install -y keepassxc` or 'flatpak install -y org.keepassxc.KeePassXC' <br>
 (needs [Sync stuff](#sync-stuff))
 
 ## Notetaking
 - [Obsidian](https://obsidian.md/download) <br>
-Add `--ozone-platform-hint=auto` for Wayland support.
+Add `--ozone-platform-hint=auto` for Wayland support. <br>
+Add '--enable-wayland-ime` for ibus/fcitx support.
 
 ## Sync stuff
 <a id="sync-stuff"></a>
@@ -134,7 +135,7 @@ systemctl --user --now enable syncthing.service
 ## Office work
 Do basic word processing, presentation and worksheet creation.
 ### Tools required
-- LibreOffice : `sudo dnf install -y libreoffice`
+- LibreOffice : `sudo dnf install -y libreoffice` or `flatpak install -y org.libreoffice.LibreOffice`
 - [OnlyOffice Desktop Editors](https://www.onlyoffice.com/download-desktop.aspx?from=desktop) (only supports Zotero online)
 - [OpenBangla Keyboard](https://github.com/OpenBangla/OpenBangla-Keyboard/tree/e050df46b20d665cc564f90261c6c6c3f1e90008/tools/make-pkgs)
 - [Microsoft Office](https://massgrave.dev) (inside a VM)
@@ -160,7 +161,8 @@ Create and run VMs for Windows-only tools.
 - [VMWare Workstation](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion) ([Mirror](https://www.techspot.com/downloads/189-vmware-workstation-for-windows.html)) (offers full DirectX acceleraion, better and faster, but you lose secure boot)
 ## Rust development
 - [Visual Studio Code](https://code.visualstudio.com/download) <br>
-Add `--ozone-platform-hint=auto` for Wayland support.
+Add `--ozone-platform-hint=auto` for Wayland support. <br>
+Add '--enable-wayland-ime` for ibus/fcitx support.
 - git : `sudo dnf install -y git`
 - rust & rust-analyzer : `sudo dnf install -y rust rust-analyzer`
 
