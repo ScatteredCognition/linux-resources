@@ -114,7 +114,8 @@ dnf --repo=rpmfusion-nonfree-tainted install "*-firmware"
 # What things I need to do on a computer
 ## Web browsing
 - [Brave Browser](https://brave.com/linux/) <br>
-Add `--enable-features=TouchpadOverscrollHistoryNavigation` for touchpad gestures.
+Add `--enable-features=TouchpadOverscrollHistoryNavigation` for touchpad gestures. <br>
+Change Wayland flags from `chrome://flags` for Wayland support.
 - KeePassXC : `sudo dnf install -y keepassxc` <br>
 (needs [Sync stuff](#sync-stuff))
 
