@@ -137,7 +137,7 @@ Do basic word processing, presentation and worksheet creation.
 - [OpenBangla Keyboard](https://github.com/OpenBangla/OpenBangla-Keyboard/tree/e050df46b20d665cc564f90261c6c6c3f1e90008/tools/make-pkgs)
 - [Microsoft Office](https://massgrave.dev) (inside a VM)
 - [Zotero 7 (unofficial)](https://github.com/ryuuzaki42/Zotero_AppImage) <br>
-If you encounter the error with Zotero 7 :
+If you encounter the error with Zotero 7 : <br>
 ```
 libdbus-glib-1.so.2: cannot open shared object file: No such file or directory Couldn't load XPCOM
 ```
