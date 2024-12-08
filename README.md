@@ -115,7 +115,15 @@ dnf --repo=rpmfusion-nonfree-tainted install "*-firmware"
 ## Web browsing
 - [Brave Browser](https://brave.com/linux/) <br>
 Add `--enable-features=TouchpadOverscrollHistoryNavigation` for touchpad gestures. <br>
-Change flags in `chrome://flags` for Wayland support & Middle-click scroll.
+Change flags in `chrome://flags` for Wayland support, installing normal websites as Webapps & Middle-click scroll. <br>
+```
+#web-app-universal-install
+#middle-button-autoscroll
+#ozone-platform-hint
+#wayland-per-window-scaling
+#wayland-text-input-v3
+#wayland-ui-scaling
+```
 - KeePassXC : `sudo dnf install -y keepassxc` or 'flatpak install -y org.keepassxc.KeePassXC` <br>
 (needs [Sync stuff](#sync-stuff))
 
