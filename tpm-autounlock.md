@@ -45,7 +45,7 @@ sudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=1+5+7+1
 ```
 
 ### Description of the TPM PCRs (in linux)
-- `PCR 1` - **Changes to Hardware** (Changing/Adding/Removing RAM/CPU/GPU etc)
+- `PCR 1` - **Hardware configuration was changed** (Changing/Adding/Removing RAM/CPU/GPU etc)
 - `PCR 5` - **GPT Partition Table was changed** (Creating/Deleting/Modifying partitions)
 - `PCR 7` - **Changes to UEFI Secureboot**
 - `PCR 14` - **Changes to Secureboot "MOK" certificates and keys** (Enrolling new Secureboot keys)
