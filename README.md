@@ -1,179 +1,41 @@
 # Fedora-KDE-setup-guide
 My personal Fedora KDE setup guide.
 
-# Tweaks and configuration for Fedora KDE
-## dnf is too slow
+**It is recommended to install/rebase and use the [`kinoite-mahrus`](https://github.com/faeizmahrus/kinoite-mahrus) Fedora Kinoite image.**
 
-- Open `dnf.conf` : `kwrite /etc/dnf/dnf.conf`
-- Add/Change the following values.
+Everything is preinstalled in the `kinoite-mahrus` image, only post-install configuration is needed.<br>
+The Syncthing service needs to be enabled.
 
-```
-# Download 20 packages simultaneously
-max_parallel_downloads = 20
+## For traditional Fedora KDE, follow :
+- [Initial Setup](initial-setup.md)
+- [Compiling OpenBangla Keyboard](obk-compile.md)
 
-# Mirror must maintain download speed of atleast 256*1024 bytes (256KiB/s) for the duration of `timeout` value in seconds
-minrate = 262144
+## For both :
+- Change the default user shell : [`fish`](fish-shell.md)
+- If using Full Disk Encryption with LUKS : [TPM autounlock](tpm-autounlock.md)
 
-# Mirror must maintain `minrate` amount of download speed in bytes for `timeout` value in seconds
-timeout = 5  
-```
 
-## Install Noto fonts and Bangla language pack
-Install all the Noto fonts and the `langpacks-bn` language pack.
-```
-run0 dnf install -y google-noto-fonts-all langpacks-bn
-```
-
-## Install, set and configure fish as the default shell
-Install the `fish` shell.
-```
-run0 dnf install -y fish
-```
-
-Set `fish` as the default shell for current user.
-```
-echo "$USER" > username.txt
-run0 usermod -s /usr/bin/fish $(cat username.txt)
-rm -f username.txt
-```
-
-Configure `fish`
-- Open `config.fish` : `kwrite ~/.config/fish/config.fish`
-- Add/Change the following values.
-```
-if status is-interactive
-# Commands to run in interactive sessions can go here
-
-# Change the welcome message
-set fish_greeting
-
-# Replace sudo with run0
-alias sudo '/usr/bin/run0'
-alias orisudo '/usr/bin/sudo'
-
-end
-```
-## Configure flatpak remotes
-Remove the Fedora flatpak remotes and add the Flathub flatpak remote.
-
-``` 
-# Delete fedora remotes
-flatpak remote-delete fedora
-flatpak remote-delete fedora-testing
-
-# Add flathub remote as system
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-# Add flathub remote as user
-flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-```
-## Configure RPMFusion
-Configure RPMFusion and install restricted extras.
+# Post-install Stuff
+## Installing Appimages
+Use the Gear Lever app from Flathub to install and set launch arguments for Appimages you have downloaded.
 
 ```
-# Run elevated to avoid password prompt spam
-run0 bash
-
-# Install rpmfusion repos
-dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
-# Initial setup stuff
-dnf config-manager setopt fedora-cisco-openh264.enabled=1
-dnf update -y @core @multimedia
-
-# Install rpmfusion tainted repos
-dnf install -y rpmfusion-free-release-tainted rpmfusion-nonfree-release-tainted
-
-# Install uncucked ffmpeg
-dnf swap -y ffmpeg-free ffmpeg --allowerasing
-
-# Install intel drivers
-dnf install -y intel-media-driver libva-intel-driver
-
-# Install uncucked amd drivers
-dnf swap -y mesa-va-drivers mesa-va-drivers-freeworld
-dnf swap -y mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
-
-# Install 32bit uncucked amd drivers (avoid)
-#dnf swap -y mesa-va-drivers.i686 mesa-va-drivers-freeworld.i686
-#dnf swap -y mesa-vdpau-drivers.i686 mesa-vdpau-drivers-freeworld.i686
-
-# Install uncucked nvidia drivers
-dnf install -y libva-nvidia-driver
-
-# Install 32bit uncucked nvidia drivers (avoid)
-#dnf install -y libva-nvidia-driver.{i686,x86_64}
-
-# Install dvd ripping library
-dnf install libdvdcss
-
-# Install tainted firmware
-dnf --repo=rpmfusion-nonfree-tainted install "*-firmware"
-
-```
-## Configure TPM autounlock with LUKS FDE
-### Atleast on Fedora 41, TPM autounlock of LUKS volumes with `systemd-cryptenroll` works ootb with no further install/modification of anything
-Resources used : [jdoss's guide](https://gist.github.com/jdoss/777e8b52c8d88eb87467935769c98a95) - [uapi-group](https://uapi-group.org/specifications/specs/linux_tpm_pcr_registry/) - [ArchWiki](https://wiki.archlinux.org/title/Systemd-cryptenroll)
-
-The /etc/crypttab and other stuff seem unnecessary, atleast for Fedora 41.
-
-**IF YOU HAVE MULTIPLE TPM DEVICES, SPECIFY THE TPM TO BE USED BY ENTERING THE FULL PATH TO THE TPM DEVICE (`/dev/<TPM2_DEVICE>`) IN `--tpm2-device=` DURING ENROLL**
-
-### Check if everything is setup correctly
-- See which volume(s) are LUKS encrypted : `orisudo blkid -t TYPE=crypto_LUKS`
-- See whether secureboot is enabled : `orisudo mokutil --sb-state`
-- See available TPM devices : `orisudo systemd-cryptenroll --tpm2-device=list`
-
-### Enroll TPM2 to LUKS
-- Enroll the LUKS volumes
-```
-orisudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volume_name>
-```
-- Enroll a recovery key (QR Code) 
-```
-orisudo systemd-cryptenroll --recovery-key /dev/<LUKS_Volume_name>
-```
-- Reboot to see whether it worked : `systemctl reboot`
-
-### Remove TPM2 from LUKS
-- Disable TPM autounlock
-```
-orisudo systemd-cryptenroll --wipe-slot=tpm2 /dev/<LUKS_Volume_name>
-```
-- Re-enroll TPM
-```
-orisudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volume_name>
+flatpak install it.mijorus.gearlever
 ```
 
-### Description of the TPM PCRs (in linux)
-- `PCR 1` - **Changes to Hardware** (Changing/Adding/Removing RAM/CPU/GPU etc)
-- `PCR 5` - **GPT Partition Table was changed** (Creating/Deleting/Modifying partitions)
-- `PCR 7` - **Changes to UEFI Secureboot**
-- `PCR 14` - **Changes to Secureboot "MOK" certificates and keys** (Enrolling new Secureboot keys)
-
-# What things I need to do on a computer
 ## Web browsing
-- [Brave Browser](https://brave.com/linux/) <br>
-Add `--enable-features=TouchpadOverscrollHistoryNavigation` for touchpad gestures. <br>
-Change flags in `chrome://flags` for Wayland support, installing normal websites as Webapps & Middle-click scroll. <br>
+- Brave Browser - [(Install)](https://brave.com/linux/) : [(Electron)](electron-args-flags.md)
+- KeePassXC - (needs [Sync stuff](#sync-stuff))
+
 ```
-#web-app-universal-install
-#middle-button-autoscroll
-#ozone-platform-hint
-#wayland-per-window-scaling
-#wayland-text-input-v3
-#wayland-ui-scaling
+sudo dnf install -y keepassxc
+flatpak install -y org.keepassxc.KeePassXC
 ```
-- KeePassXC : `sudo dnf install -y keepassxc` or 'flatpak install -y org.keepassxc.KeePassXC` <br>
-(needs [Sync stuff](#sync-stuff))
 
 ## Notetaking
-- [Obsidian](https://obsidian.md/download) <br>
-Add `--ozone-platform-hint=auto` for Wayland support. <br>
-Add `--enable-wayland-ime` for ibus/fcitx support.
+- Obsidian - [(Appimage)](#installing-appimages) : [(Download)](https://obsidian.md/download) : [(Electron)](electron-args-flags.md) (needs [Sync stuff](#sync-stuff)) <br>
 
 ## Sync stuff
-<a id="sync-stuff"></a>
 - Syncthing : `sudo dnf install -y syncthing` <br>
 - Enable the service :
 ```
@@ -183,15 +45,23 @@ systemctl --user --now enable syncthing.service
 ## Office work
 Do basic word processing, presentation and worksheet creation.
 ### Tools required
-- LibreOffice : `sudo dnf install -y libreoffice` or `flatpak install -y org.libreoffice.LibreOffice`
-- [OnlyOffice Desktop Editors](https://www.onlyoffice.com/download-desktop.aspx?from=desktop) (only supports Zotero online)
-- [OpenBangla Keyboard](https://github.com/OpenBangla/OpenBangla-Keyboard/tree/e050df46b20d665cc564f90261c6c6c3f1e90008/tools/make-pkgs)
-- [Microsoft Office](https://massgrave.dev) (inside a VM)
-- [Zotero 7 (unofficial)](https://github.com/ryuuzaki42/Zotero_AppImage) <br>
+- LibreOffice
+
+```
+sudo dnf install -y libreoffice
+flatpak install -y org.libreoffice.LibreOffice
+```
+
+- OnlyOffice Desktop Editors - [(Install)](https://www.onlyoffice.com/download-desktop.aspx?from=desktop) (only supports Zotero online)
+- OpenBangla Keyboard - [(Guide)](obk-compile.md)
+- Microsoft Office - [(Download)](https://massgrave.dev) (inside a VM)
+- Zotero 7 (unofficial) - [(Appimage)](#installing-appimages) : [(Download)](https://github.com/ryuuzaki42/Zotero_AppImage) <br>
 If you encounter the error with Zotero 7 : <br>
+
 ```
 libdbus-glib-1.so.2: cannot open shared object file: No such file or directory Couldn't load XPCOM
-```
+``` 
+
 Install `dbus-glib` : `sudo dnf install -y dbus-glib`
 
 ## Graphics Design
@@ -203,14 +73,15 @@ Install `dbus-glib` : `sudo dnf install -y dbus-glib`
 Create and run VMs for Windows-only tools.
 ### Tools required
 - virt-manager : `sudo dnf install -y virt-manager` <br> (needs additional setup, unfinished)
-- [Windows virtIO guest drivers](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/) (download iso)
+- Windows virtIO guest drivers [(Download ISO)](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/)
 - RDP (optional)
 - Intel iGPU SRIOV (someday soon)
-- [VMWare Workstation](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion) ([Mirror](https://www.techspot.com/downloads/189-vmware-workstation-for-windows.html)) (offers full DirectX acceleraion, better and faster, but you lose secure boot)
+- VMWare Workstation - [(Download)](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion) : [(Mirror)](https://www.techspot.com/downloads/189-vmware-workstation-for-windows.html) <br>
+(offers full DirectX acceleraion, better and faster, but you lose secure boot)
+
 ## Rust development
-- [Visual Studio Code](https://code.visualstudio.com/download) <br>
-Add `--ozone-platform-hint=auto` for Wayland support. <br>
-Add `--enable-wayland-ime` for ibus/fcitx support.
+- distrobox : `sudo dnf install -y distrobox`
+- Visual Studio Code - [(Install)](https://code.visualstudio.com/download) : [(Electron)](electron-args-flags.md)
 - git : `sudo dnf install -y git`
 - rust & rust-analyzer : `sudo dnf install -y rust rust-analyzer`
 
