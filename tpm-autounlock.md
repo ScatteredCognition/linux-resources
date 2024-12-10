@@ -7,9 +7,18 @@ The /etc/crypttab and other stuff seem unnecessary, atleast for Fedora 41.
 **IF YOU HAVE MULTIPLE TPM DEVICES, SPECIFY THE TPM TO BE USED BY ENTERING THE FULL PATH TO THE TPM DEVICE (`/dev/<TPM2_DEVICE>`) IN `--tpm2-device=` DURING ENROLL**
 
 ### Check if everything is setup correctly
-- See which volume(s) are LUKS encrypted : `sudo blkid -t TYPE=crypto_LUKS`
-- See whether secureboot is enabled : `sudo mokutil --sb-state`
-- See available TPM devices : `sudo systemd-cryptenroll --tpm2-device=list`
+- See which volume(s) are LUKS encrypted
+```
+sudo blkid -t TYPE=crypto_LUKS
+```
+- See whether secureboot is enabled
+```
+sudo mokutil --sb-state
+```
+- See available TPM devices
+```
+sudo systemd-cryptenroll --tpm2-device=list
+```
 
 ### Enroll TPM2 to LUKS
 - Enroll the LUKS volumes
