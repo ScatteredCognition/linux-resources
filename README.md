@@ -125,19 +125,19 @@ See whether secureboot is enabled : `orisudo mokutil --sb-state`
 See available TPM devices : `orisudo systemd-cryptenroll --tpm2-device=list`
 
 ### Enroll TPM2 to LUKS
-Enroll the LUKS volumes : `orisudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volume_name>`
-Enroll a recovery key (QR Code) : `orisudo systemd-cryptenroll --recovery-key /dev/<LUKS_Volume_name>`
-Reboot to see whether it worked : `systemctl reboot`
+- Enroll the LUKS volumes : `orisudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volume_name>`
+- Enroll a recovery key (QR Code) : `orisudo systemd-cryptenroll --recovery-key /dev/<LUKS_Volume_name>`
+- Reboot to see whether it worked : `systemctl reboot`
 
 ### Remove TPM2 from LUKS
-Disable TPM autounlock : `orisudo systemd-cryptenroll --wipe-slot=tpm2 /dev/<LUKS_Volume_name>`
-Re-enroll TPM : `orisudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volume_name>`
+- Disable TPM autounlock : `orisudo systemd-cryptenroll --wipe-slot=tpm2 /dev/<LUKS_Volume_name>`
+- Re-enroll TPM : `orisudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volume_name>`
 
 ### Description of the TPM PCRs (in linux)
-`PCR 1` - Changes to Hardware (Changing/Adding/Removing RAM/CPU/GPU etc)
-`PCR 5` - GPT Partition Table was changed (Creating/Deleting/Modifying partitions)
-`PCR 7` - Changes to UEFI Secureboot
-`PCR 14` - Changes to Secureboot "MOK" certificates and keys (Enrolling new Secureboot keys)
+- `PCR 1` - Changes to Hardware (Changing/Adding/Removing RAM/CPU/GPU etc)
+- `PCR 5` - GPT Partition Table was changed (Creating/Deleting/Modifying partitions)
+- `PCR 7` - Changes to UEFI Secureboot
+- `PCR 14` - Changes to Secureboot "MOK" certificates and keys (Enrolling new Secureboot keys)
 
 # What things I need to do on a computer
 ## Web browsing
