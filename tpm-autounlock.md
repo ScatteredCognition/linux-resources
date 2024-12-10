@@ -29,7 +29,10 @@ sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volu
 ```
 sudo systemd-cryptenroll --recovery-key /dev/<LUKS_Volume_name>
 ```
-- Reboot to see whether it worked : `systemctl reboot`
+- Reboot to see whether it worked
+```
+systemctl reboot
+```
 
 ### Remove TPM2 from LUKS
 - Disable TPM autounlock
