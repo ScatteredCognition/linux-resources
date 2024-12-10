@@ -129,17 +129,20 @@ The /etc/crypttab and other stuff seem unnecessary, atleast for Fedora 41.
 ```
 orisudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volume_name>
 ```
-- Enroll a recovery key (QR Code)
-```orisudo systemd-cryptenroll --recovery-key /dev/<LUKS_Volume_name>
+- Enroll a recovery key (QR Code) 
+```
+orisudo systemd-cryptenroll --recovery-key /dev/<LUKS_Volume_name>
 ```
 - Reboot to see whether it worked : `systemctl reboot`
 
 ### Remove TPM2 from LUKS
 - Disable TPM autounlock
-```orisudo systemd-cryptenroll --wipe-slot=tpm2 /dev/<LUKS_Volume_name>
+```
+orisudo systemd-cryptenroll --wipe-slot=tpm2 /dev/<LUKS_Volume_name>
 ```
 - Re-enroll TPM
-```orisudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volume_name>
+```
+orisudo systemd-cryptenroll --wipe-slot=tpm2 --tpm2-device=auto --tpm2-pcrs=1+5+7+14 /dev/<LUKS_Volume_name>
 ```
 
 ### Description of the TPM PCRs (in linux)
