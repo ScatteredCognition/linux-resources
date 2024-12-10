@@ -6,7 +6,7 @@ My personal Fedora KDE setup guide.
 Everything is preinstalled in the `kinoite-mahrus` image, only post-install configuration is needed.<br>
 The Syncthing service needs to be enabled.
 
-## For traditional Fedora KDE, follow :
+## For traditional Fedora KDE :
 - [Initial Setup](initial-setup.md)
 - [Compiling OpenBangla Keyboard](obk-compile.md)
 
