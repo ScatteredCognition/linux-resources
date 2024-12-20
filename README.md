@@ -1,10 +1,5 @@
-# Fedora-KDE-setup-guide
-My personal Fedora KDE setup guide.
-
-**It is recommended to install/rebase and use the [`kinoite-mahrus`](https://github.com/faeizmahrus/kinoite-mahrus) Fedora Kinoite image.**
-
-Everything is preinstalled in the `kinoite-mahrus` image, only post-install configuration is needed.<br>
-The Syncthing service needs to be enabled.
+# Linux resources
+Github repo to archive and share my resources regarding linux.
 
 ## For traditional Fedora KDE :
 - [Initial Setup](initial-setup.md)
