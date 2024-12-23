@@ -1,55 +1,47 @@
 # Linux resources
 Github repo to archive and share my resources regarding linux.
+- INSTALLING NORMAL FEDORA IS A HASSLE, IF YOU REALLY MUST, HERE'S THE GUIDE - [(guide)](guides/initial-setup.md)
 
-## For traditional Fedora KDE :
-- [Initial Setup](initial-setup.md)
-- [Compiling OpenBangla Keyboard](obk-compile.md)
+## Fedora Quick Start
+- Install Fedora Silverblue/Kinoite. [(torrent)](https://torrents.fedoraproject.org/)
+- Rebase onto custom [`kinoite-mahrus`](https://github.com/faeizmahrus/os-images) image. <br>
+  ```bash
+  ## Rebase onto unverified image
+  rpm-ostree rebase ostree-unverified-registry:ghcr.io/faeizmahrus/kinoite-mahrus:latest
 
-## For both :
-- Change the default user shell : [`fish`](fish-shell.md)
-- If using Full Disk Encryption with LUKS : [TPM autounlock](tpm-autounlock.md)
+  ## Reboot to boot into it
+  systemctl reboot
+
+  ## Rebase onto signed image
+  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/faeizmahrus/kinoite-mahrus:latest
+
+  ## Reboot to boot into it
+  systemctl reboot
+
+  ## Pin the current image and remove the previous ones
+  sudo ostree admin pin 0
+  rpm-ostree cleanup -rpmb
+  ```
+
+- Enable Flathub repo & disable Fedora flatpak repos <br>
+  ```bash
+  ## Delete fedora remotes
+  flatpak remote-delete fedora
+  flatpak remote-delete fedora-testing
+  
+  ## Add flathub remote as user (remove --user flag to install as system)
+  flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  ```
+
+- Change the default user shell : [`fish`](guides/fish-shell.md)
+- If using Full Disk Encryption with LUKS : [TPM autounlock](guides/tpm-autounlock.md)
+- Enable OpenBangla Keyboard with fcitx (TODO) [(how to compile)](guides/obk-compile.md)
+- Enable syncthing service: <br>
+  `systemctl --user --now enable syncthing.service`
 
 
-# Post-install Stuff
-## Installing Appimages
-Use the Gear Lever app from Flathub to install and set launch arguments for Appimages you have downloaded.
-
-```
-flatpak install it.mijorus.gearlever
-```
-
-## Web browsing
-- Brave Browser - [(Install)](https://brave.com/linux/) : [(Electron)](electron-args-flags.md)
-- KeePassXC - (needs [Sync stuff](#sync-stuff))
-
-```
-sudo dnf install -y keepassxc
-flatpak install -y org.keepassxc.KeePassXC
-```
-
-## Notetaking
-- Obsidian - [(Appimage)](#installing-appimages) : [(Download)](https://obsidian.md/download) : [(Electron)](electron-args-flags.md) (needs [Sync stuff](#sync-stuff)) <br>
-
-## Sync stuff
-- Syncthing : `sudo dnf install -y syncthing` <br>
-- Enable the service :
-```
-systemctl --user --now enable syncthing.service
-```
-
-## Office work
-Do basic word processing, presentation and worksheet creation.
-### Tools required
-- LibreOffice
-
-```
-sudo dnf install -y libreoffice
-flatpak install -y org.libreoffice.LibreOffice
-```
-
-- OnlyOffice Desktop Editors - [(Install)](https://www.onlyoffice.com/download-desktop.aspx?from=desktop) (only supports Zotero online)
-- OpenBangla Keyboard - [(Guide)](obk-compile.md)
-- Microsoft Office - [(Download)](https://massgrave.dev) (inside a VM)
+## NOTE:
+- Compiling OpenBangla Keyboard - [(guide)](guides/obk-compile.md)
 - Zotero 7 (unofficial) - [(Appimage)](#installing-appimages) : [(Download)](https://github.com/ryuuzaki42/Zotero_AppImage) <br>
 If you encounter the error with Zotero 7 : <br>
 
@@ -58,25 +50,3 @@ libdbus-glib-1.so.2: cannot open shared object file: No such file or directory C
 ``` 
 
 Install `dbus-glib` : `sudo dnf install -y dbus-glib`
-
-## Graphics Design
-- Krita : `sudo dnf install -y krita`
-- GIMP : `sudo dnf install -y gimp`
-- Affinity Suite (inside a VM)
-
-## Virtual machines
-Create and run VMs for Windows-only tools.
-### Tools required
-- virt-manager : `sudo dnf install -y virt-manager` <br> (needs additional setup, unfinished)
-- Windows virtIO guest drivers [(Download ISO)](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/)
-- RDP (optional)
-- Intel iGPU SRIOV (someday soon)
-- VMWare Workstation - [(Download)](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion) : [(Mirror)](https://www.techspot.com/downloads/189-vmware-workstation-for-windows.html) <br>
-(offers full DirectX acceleraion, better and faster, but you lose secure boot)
-
-## Rust development
-- distrobox : `sudo dnf install -y distrobox`
-- Visual Studio Code - [(Install)](https://code.visualstudio.com/download) : [(Electron)](electron-args-flags.md)
-- git : `sudo dnf install -y git`
-- rust & rust-analyzer : `sudo dnf install -y rust rust-analyzer`
-

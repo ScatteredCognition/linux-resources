@@ -79,3 +79,22 @@ dnf install libdvdcss
 dnf --repo=rpmfusion-nonfree-tainted install "*-firmware"
 
 ```
+
+## Others
+
+- Change the default user shell : [`fish`](guides/fish-shell.md)
+- If using Full Disk Encryption with LUKS : [TPM autounlock](guides/tpm-autounlock.md)
+- Enable OpenBangla Keyboard with fcitx (TODO) [(how to compile)](guides/obk-compile.md)
+- Enable syncthing service: <br>
+  `systemctl --user --now enable syncthing.service`
+
+## NOTE:
+- Compiling OpenBangla Keyboard - [(guide)](guides/obk-compile.md)
+- Zotero 7 (unofficial) - [(Appimage)](#installing-appimages) : [(Download)](https://github.com/ryuuzaki42/Zotero_AppImage) <br>
+If you encounter the error with Zotero 7 : <br>
+
+```
+libdbus-glib-1.so.2: cannot open shared object file: No such file or directory Couldn't load XPCOM
+``` 
+
+Install `dbus-glib` : `sudo dnf install -y dbus-glib`
