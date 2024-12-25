@@ -35,7 +35,7 @@ Github repo to archive and share my resources regarding linux.
 
 - Change the default user shell : [`fish`](guides/fish-shell.md)
 - If using Full Disk Encryption with LUKS : [TPM autounlock](guides/tpm-autounlock.md)
-- Enable OpenBangla Keyboard with fcitx (TODO) [(how to compile)](guides/obk-compile.md)
+- Enable OpenBangla Keyboard with fcitx (TODO)
 - Enable syncthing service: <br>
   `systemctl --user --now enable syncthing.service`
 
