@@ -4,49 +4,37 @@ Github repo to archive and share my resources regarding linux.
 
 ## Fedora Quick Start
 - Install Fedora Silverblue/Kinoite. [(torrent)](https://torrents.fedoraproject.org/)
-- Rebase onto custom [`kinoite-mahrus`](https://github.com/faeizmahrus/os-images) image. <br>
-  ```bash
-  ## Rebase onto unverified image
-  rpm-ostree rebase ostree-unverified-registry:ghcr.io/faeizmahrus/kinoite-mahrus:latest
-
-  ## Reboot to boot into it
-  systemctl reboot
-
-  ## Rebase onto signed image
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/faeizmahrus/kinoite-mahrus:latest
-
-  ## Reboot to boot into it
-  systemctl reboot
-
-  ## Pin the current image and remove the previous ones
-  sudo ostree admin pin 0
-  rpm-ostree cleanup -rpmb
-  ```
-
+- Rebase onto custom `-mahrus` image. [(link)](https://github.com/faeizmahrus/os-images) <br>
 - Enable Flathub repo & disable Fedora flatpak repos <br>
   ```bash
   ## Delete fedora remotes
   flatpak remote-delete fedora
   flatpak remote-delete fedora-testing
   
-  ## Add flathub remote as user (remove --user flag to install as system)
+  ## Add flathub remote as user (use --system flag to install as system)
+  ## Should get auto-installed with the latest images
   flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  ```
+- Install VSCode, Obsidian and OnlyOffice from distrobox <br>
+  ```bash
+  ## Create container
+  DBX_NON_INTERACTIVE=1 distrobox create \
+  -i ghcr.io/faeizmahrus/appbox-debian \
+  -n appbox \
+  --hostname appbox \
+  -H ~/.local/distrobox/appbox/
+
+  ## Export apps
+  distrobox enter appbox -- appbox-export
   ```
 
 - Change the default user shell : [`fish`](guides/fish-shell.md)
 - If using Full Disk Encryption with LUKS : [TPM autounlock](guides/tpm-autounlock.md)
-- Enable OpenBangla Keyboard with fcitx (TODO)
 - Enable syncthing service: <br>
   `systemctl --user --now enable syncthing.service`
 
 
 ## NOTE:
 - Compiling OpenBangla Keyboard - [(guide)](guides/obk-compile.md)
-- Zotero 7 (unofficial) - [(Appimage)](#installing-appimages) : [(Download)](https://github.com/ryuuzaki42/Zotero_AppImage) <br>
-If you encounter the error with Zotero 7 : <br>
-
-```
-libdbus-glib-1.so.2: cannot open shared object file: No such file or directory Couldn't load XPCOM
-``` 
-
-Install `dbus-glib` : `sudo dnf install -y dbus-glib`
+- Useful flags for Electron apps or Chromium - [(guide)](guides/electron-args-flags.md)
+- Enable OpenBangla Keyboard with fcitx (TODO)
