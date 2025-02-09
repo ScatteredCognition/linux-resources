@@ -1,7 +1,14 @@
 # Guide to generate RPMs for OpenBangla Keyboard
 
-- Clone the repo : `git clone --recursive https://github.com/OpenBangla/OpenBangla-Keyboard.git && cd OpenBangla-Keyboard`
-- Checkout branch and update submodules : `git checkout develop` or `git checkout master` and `git submodule update`
+- Clone the repo : <br>
+```bash
+git clone --recursive https://github.com/OpenBangla/OpenBangla-Keyboard.git && cd OpenBangla-Keyboard
+```
+
+- There is a tool in the repo for auto-compiling inside a toolbox for any specified distro.
+
+- Checkout branch and update submodules : <br >
+`git checkout develop` or `git checkout master` and `git submodule update`
 - Browse to the repo directory : `cd OpenBangla-Keyboard`
 - Install dependencies : `sudo dnf -y install @buildsys-build rust cargo cmake qt5-qtdeclarative-devel libzstd-devel fcitx5 fcitx5-devel ibus ibus-devel ninja-build curl meson git`
 
