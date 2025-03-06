@@ -4,6 +4,8 @@ Github repo to archive and share my resources regarding linux.
 
 ## Fedora Quick Start
 - Install Fedora Silverblue/Kinoite. [(torrent)](https://torrents.fedoraproject.org/)
+- Rebase to Chondro or Shurjo image.
+- NOTE : EACH RPM-OSTREE OVERLAY DOES GIGABYTES OF DISK WRITES, BETTER TO AVOID.
 - Update The system. <br>
 ```bash
 rpm-ostree update
@@ -45,7 +47,7 @@ rpm-ostree override remove fdk-aac-free libavcodec-free libavdevice-free libavfi
 - Install shells. <br>
 `rpm-ostree install fish tcsh zsh nu`
 - Install apps and utilities. <br>
-`rpm-ostree install syncthing distrobox git`
+`rpm-ostree install syncthing distrobox git android-tools firewall-config`
 - Install Bangla language stuff. <br>
 `rpm-ostree install langpacks-bn <path_to_OpenBangla_Keyboard.rpm>`
 - Enable Flathub repo & delete Fedora flatpak repos <br>
