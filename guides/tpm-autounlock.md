@@ -53,7 +53,8 @@ systemctl reboot
 - **IF THE SYSTEM ASKS FOR A PASSWORD AFTER AN UPDATE, YOU NEED TO UPDATE THE PCR PREDICTIONS**
 - Recalculate the PCRs
 ```bash
-sudo systemd-pcrlock update
+sudo systemd-pcrlock predict
+sudo systemd-pcrlock make-policy
 ```
 
 ### Remove TPM2 from LUKS
