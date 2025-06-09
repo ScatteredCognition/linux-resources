@@ -51,12 +51,15 @@ systemctl reboot
 ```
 ### Recalculate PCR values after modification/update
 - **IF THE SYSTEM ASKS FOR A PASSWORD AFTER AN UPDATE, YOU NEED TO UPDATE THE PCR PREDICTIONS**
-- Recalculate the PCRs
+- Recalculate the PCRs manually.
 ```bash
 sudo systemd-pcrlock predict
 sudo systemd-pcrlock make-policy
 ```
-
+- Enable a service that does thiws automatically on every shutdown/boot.
+```bash
+systemctl enable systemd-pcrlock-make-policy.service
+```
 ### Remove TPM2 from LUKS
 - Disable TPM autounlock
 ```bash
