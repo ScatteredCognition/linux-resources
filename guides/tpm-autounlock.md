@@ -49,6 +49,12 @@ sudo systemd-cryptenroll --recovery-key <LUKS_Volume>
 ```bash
 systemctl reboot
 ```
+### Recalculate PCR values after modification/update
+- **IF THE SYSTEM ASKS FOR A PASSWORD AFTER AN UPDATE, YOU NEED TO UPDATE THE PCR PREDICTIONS**
+- Recalculate the PCRs
+```bash
+sudo systemd-pcrlock update
+```
 
 ### Remove TPM2 from LUKS
 - Disable TPM autounlock
