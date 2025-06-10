@@ -51,6 +51,7 @@ systemctl reboot
 ```
 ### Recalculate PCR values after modification/update
 - **IF THE SYSTEM ASKS FOR A PASSWORD AFTER AN UPDATE, YOU NEED TO UPDATE THE PCR PREDICTIONS**
+- **SCRATCH THAT, THIS WONT WORK WITUOUT SD-BOOT AND UKIS**
 - Recalculate the PCRs manually.
 ```bash
 sudo systemd-pcrlock predict
