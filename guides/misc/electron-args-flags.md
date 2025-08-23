@@ -3,7 +3,9 @@ Various launch arguments and flags for
 Electron apps.
 
 ### Launch arguments :
-**You need to copy the app's `.desktop` file to `~/.local/share/applications/` and append it after `Exec=` in all entry fields.**
+**You need to copy the app's `.desktop` file to `~/.local/share/applications/` and append it after `Exec=` in all entry fields.** <br>
+**NOTE: Arch-based distros usually have .conf files to easily handle commandline args**
+
 
 - `--ozone-platform-hint=auto` <br>
 Runs the app with Wayland support.
@@ -22,7 +24,7 @@ Enables Fractional Scaling support under Wayland.
 - `#wayland-per-window-scaling` - **Enabled** <br>
 Enables per-window scaling support.
 - `#wayland-text-input-v3` - **Enabled** <br>
-idk.
+Used to enable proper ibus support on older GNOME versions without text-input-v1 support.
 - `#middle-button-autoscroll` - **Enabled** <br>
 Enables middle-click autoscroll.
 - `#web-app-universal-install` - **Enabled** <br>

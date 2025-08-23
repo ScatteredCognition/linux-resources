@@ -1,8 +1,6 @@
-## Configure TPM autounlock with LUKS FDE
-### On Fedora 41, TPM autounlock of LUKS volumes with `systemd-cryptenroll` works ootb with no further install/modification of anything
-Resources used : [jdoss's guide](https://gist.github.com/jdoss/777e8b52c8d88eb87467935769c98a95) - [uapi-group](https://uapi-group.org/specifications/specs/linux_tpm_pcr_registry/) - [ArchWiki](https://wiki.archlinux.org/title/Systemd-cryptenroll) - [FreeDesktop](https://www.freedesktop.org/software/systemd/man/latest/systemd-cryptenroll.html) - [AskUbuntu](https://askubuntu.com/questions/1357694/trying-to-understand-errors-from-tpm2-tools) - [tpm2-tools readthedocs](https://tpm2-tools.readthedocs.io)
+# Guide for setting up auto-unlocking LUKS2 volumes on boot with a TPM2 chip
 
-The /etc/crypttab and other stuff seem unnecessary, atleast for Fedora 41.
+Resources used : [jdoss's guide](https://gist.github.com/jdoss/777e8b52c8d88eb87467935769c98a95) - [uapi-group](https://uapi-group.org/specifications/specs/linux_tpm_pcr_registry/) - [ArchWiki](https://wiki.archlinux.org/title/Systemd-cryptenroll) - [FreeDesktop](https://www.freedesktop.org/software/systemd/man/latest/systemd-cryptenroll.html) - [AskUbuntu](https://askubuntu.com/questions/1357694/trying-to-understand-errors-from-tpm2-tools) - [tpm2-tools readthedocs](https://tpm2-tools.readthedocs.io)
 
 **IF YOU HAVE MULTIPLE TPM DEVICES, SPECIFY THE TPM TO BE USED BY ENTERING THE FULL PATH TO THE TPM DEVICE (`/dev/<TPM2_DEVICE>`) IN `--tpm2-device=` DURING ENROLL**
 
@@ -49,7 +47,24 @@ sudo systemd-cryptenroll --recovery-key <LUKS_Volume>
 ```bash
 systemctl reboot
 ```
-### Recalculate PCR values after modification/update
+### Remove TPM2 from LUKS
+- Disable TPM autounlock
+```bash
+sudo systemd-cryptenroll --wipe-slot=tpm2 <LUKS_Volume>
+```
+
+### Description of the TPM PCRs (in linux)
+- `PCR 1` - **Hardware configuration was changed** (Changing/Adding/Removing RAM/CPU/GPU etc)
+- `PCR 5` - **GPT Partition Table was changed** (Creating/Deleting/Modifying partitions)
+- `PCR 7` - **Changes to UEFI Secureboot State**
+
+#### These values require systemd-boot and/or UKIs
+- `PCR 14` - **Changes to Secureboot "MOK" certificates and keys** (Enrolling new Secureboot keys)
+- `PCR 15` - **Changes to `machine-id`, UUIDs of various mountpoints, other systemd measurements** [(Mitigation for this ???)](https://oddlama.org/blog/bypassing-disk-encryption-with-tpm2-unlock/)
+
+## Ignore the section below, it's a scratchpad
+
+### (TODO, EXPERIMENTAL) Recalculate PCR values after modification/update
 - **IF THE SYSTEM ASKS FOR A PASSWORD AFTER AN UPDATE, YOU NEED TO UPDATE THE PCR PREDICTIONS**
 - **SCRATCH THAT, THIS WONT WORK WITUOUT SD-BOOT AND UKIS**
 - Recalculate the PCRs manually.
@@ -61,25 +76,10 @@ sudo systemd-pcrlock make-policy
 ```bash
 systemctl enable systemd-pcrlock-make-policy.service
 ```
-### Remove TPM2 from LUKS
-- Disable TPM autounlock
-```bash
-sudo systemd-cryptenroll --wipe-slot=tpm2 <LUKS_Volume>
-```
-
-### Take Ownership and lock the TPM2 chip
+### (UNSURE WHAT TO DO WITH THIS) Take Ownership and lock the TPM2 chip
 - Set Owner, Endorsement and Lockout passwords to ensure they can't be changed by unauthorized parties. (You need to remove the locks everytime you need to re-enroll the TPM)
 ```bash
 tpm2_changeauth -c owner newpass
 tpm2_changeauth -c endorsement newpass
 tpm2_changeauth -c lockout newpass
 ```
-
-### Description of the TPM PCRs (in linux)
-- `PCR 1` - **Hardware configuration was changed** (Changing/Adding/Removing RAM/CPU/GPU etc)
-- `PCR 5` - **GPT Partition Table was changed** (Creating/Deleting/Modifying partitions)
-- `PCR 7` - **Changes to UEFI Secureboot State**
-
-#### These values require systemd-boot and/or UKIs
-- `PCR 14` - **Changes to Secureboot "MOK" certificates and keys** (Enrolling new Secureboot keys)
-- `PCR 15` - **Changes to `machine-id`, UUIDs of various mountpoints, other systemd measurements** [(Mitigation for this ???)](https://oddlama.org/blog/bypassing-disk-encryption-with-tpm2-unlock/)
