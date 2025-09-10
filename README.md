@@ -2,10 +2,12 @@
 Github repo to archive and share my resources regarding linux.
 
 ## Resources regarding Fedora Linux
+- [Setup auto-unlock of LUKS2 volume on boot with a TPM2 chip on Fedora Linux](/guides/fedora/fed-tpm-autounlock.md)
 - [Initial setup guide for Fedora Linux.](/guides/fedora/fed-initial-setup.md)
+- [Initial setup guide for Fedora Silverblue.](/guides/fedora/fed-sblue-setup.md)
+- [Setup VSCode with podman](/guides/fedora/fed-vscode.md)
 - [Setting the `fish` shell as default login shell.](/guides/misc/fish-shell.md)
 - [Compile OpenBangla Keyboard for Fedora Linux](/guides/fedora/fed-obk-compile.md)
-- [Setup auto-unlock of LUKS2 volume on boot with a TPM2 chip on Fedora Linux](/guides/fedora/fed-tpm-autounlock.md)
 
 ## Resources regarding CachyOS
 - [Setup auto-unlock of LUKS2 volume on boot with a TPM2 chip on CachyOS](/guides/cachyos/chyos-tpm-autounlock.md)
