@@ -6,15 +6,16 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+# See if user initialized a factory reset
 # Ensure /etc/fstab and /etc/crypttab exist, restore from /var/etc if missing
-if [ ! -f /etc/fstab ]; then
+if [ ! -f /etc/fstab ] && [ -f /var/etc/sb-factory-reset ]; then
   echo "/etc/fstab not found."
-  echo "Did you initiate a factory reset before?"
-  read -rp "Restore /etc/fstab from /var/etc/fstab? (y/N): " ans
+  echo "Factory restore was initiated."
+  read -rp "Restore /etc/fstab from /var/sb-fr/fstab? (y/N): " ans
   case "$ans" in
     y|Y )
-      echo "Restoring /etc/fstab from /var/etc/fstab."
-      cp /var/etc/fstab /etc/fstab
+      echo "Restoring /etc/fstab from /var/sb-fr/fstab."
+      cp /var/sb-fr/fstab /etc/fstab
       exit 1
       ;;
     * )
@@ -23,14 +24,14 @@ if [ ! -f /etc/fstab ]; then
       ;;
   esac
 fi
-if [ ! -f /etc/crypttab ]; then
+if [ ! -f /etc/crypttab ] && [ -f /var/etc/sb-factory-reset ]; then
   echo "/etc/crypttab not found."
-  echo "Did you initiate a factory reset before?"
-  read -rp "Restore /etc/crypttab from /var/etc/crypttab? (y/N): " ans
+  echo "Factory restore was initiated."
+  read -rp "Restore /etc/crypttab from /var/sb-fr/crypttab? (y/N): " ans
   case "$ans" in
     y|Y )
-      echo "Restoring /etc/crypttab from /var/etc/crypttab."
-      cp /var/etc/crypttab /etc/crypttab
+      echo "Restoring /etc/crypttab from /var/sb-fr/crypttab."
+      cp /var/sb-fr/crypttab /etc/crypttab
       exit 1
       ;;
     * )
@@ -52,7 +53,9 @@ echo -e "All user accounts and data will be lost."
 # Are you sure?
 read -rp "Do you want to continue? (y/N): " choice
 case "$choice" in
-  y|Y ) echo "Proceeding with factory reset...";;
+  y|Y ) echo "Proceeding with factory reset..."
+  touch /var/sb-fr/sb-factory-reset
+  ;;
   * ) echo "Aborting."; exit 1;;
 esac
 
@@ -67,8 +70,8 @@ fi
 # Proceed with factory reset
 # Backup fstab and crypttab
 echo -e "Copying fstab and crypttab from /etc to /var"
-cp /etc/fstab /var/etc/fstab
-cp /etc/crypttab /var/etc/crypttab
+cp /etc/fstab /var/sb-fr/fstab
+cp /etc/crypttab /var/sb-fr/crypttab
 # Run ostree command
 echo -e "Resetting all rpm-ostree overrides and overlays and redeploying system..."
 ostree admin deploy "$( rpm-ostree status | grep -m 1 -P '^(?=.*fedora:fedora)(?=.*silverblue)' | awk '{$1=$1; print}' )" --no-merge --karg-proc-cmdline
