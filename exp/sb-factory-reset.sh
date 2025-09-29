@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # See if user initialized a factory reset
-# Ensure /etc/fstab and /etc/crypttab exist, restore from /var/etc if missing
+# Ensure /etc/fstab and /etc/crypttab exist, restore from /var/sb-fr if missing
 if [ ! -f /etc/fstab ] && [ -f /var/sb-fr/sb-factory-reset ]; then
   echo "/etc/fstab not found."
   echo "Factory restore was initiated."
