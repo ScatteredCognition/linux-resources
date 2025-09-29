@@ -77,5 +77,5 @@ cp /etc/crypttab /var/sb-fr/crypttab
 echo -e "Resetting all rpm-ostree overrides and overlays and redeploying system..."
 ostree admin deploy "$( rpm-ostree status | grep -m 1 -P '^(?=.*fedora:fedora)(?=.*silverblue)' | awk '{$1=$1; print}' )" --no-merge --karg-proc-cmdline
 echo -e "Factory reset complete."
-echo -e "Please rerun this script to restore /etc/fstab and /etc/crypttab"
+echo -e "Please rerun this script after rebooting into the new deployment to restore /etc/fstab and /etc/crypttab"
 echo -e "Reboot the system."
