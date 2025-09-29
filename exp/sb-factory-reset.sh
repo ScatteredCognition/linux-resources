@@ -6,7 +6,7 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-mkdir /var/sb-fr 2>/dev/null
+mkdir /var/sb-fr/ 2>/dev/null
 
 # See if user initialized a factory reset
 # Ensure /etc/fstab and /etc/crypttab exist, restore from /var/sb-fr if missing
