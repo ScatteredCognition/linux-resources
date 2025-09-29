@@ -8,7 +8,7 @@ fi
 
 # See if user initialized a factory reset
 # Ensure /etc/fstab and /etc/crypttab exist, restore from /var/etc if missing
-if [ ! -f /etc/fstab ] && [ -f /var/etc/sb-factory-reset ]; then
+if [ ! -f /etc/fstab ] && [ -f /var/sb-fr/sb-factory-reset ]; then
   echo "/etc/fstab not found."
   echo "Factory restore was initiated."
   read -rp "Restore /etc/fstab from /var/sb-fr/fstab? (y/N): " ans
@@ -24,7 +24,7 @@ if [ ! -f /etc/fstab ] && [ -f /var/etc/sb-factory-reset ]; then
       ;;
   esac
 fi
-if [ ! -f /etc/crypttab ] && [ -f /var/etc/sb-factory-reset ]; then
+if [ ! -f /etc/crypttab ] && [ -f /var/sb-fr/sb-factory-reset ]; then
   echo "/etc/crypttab not found."
   echo "Factory restore was initiated."
   read -rp "Restore /etc/crypttab from /var/sb-fr/crypttab? (y/N): " ans
