@@ -27,6 +27,7 @@ org.gnome.Logs \ # Logs
 org.gnome.Loupe \ # Image Viewer
 org.gnome.Maps \ # Maps
 org.gnome.Music \ # Music
+org.gnome.Papers \ # Papers
 org.gnome.SimpleScan \ # Document Scanner
 org.gnome.Snapshot \ # Camera
 org.gnome.SoundRecorder \ # Sound Recorder
