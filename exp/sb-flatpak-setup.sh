@@ -12,57 +12,56 @@ flatpak remote-delete fedora-testing 2>/dev/null
 
 ## Add flathub repos
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-flatpak remote-add --if-not-exists flathub-user https://flathub.org/repo/flathub.flatpakrepo
+#flatpak remote-add --if-not-exists flathub-user https://flathub.org/repo/flathub.flatpakrepo
 
 ## Add GNOME Apps and Flatpak essentials
 flatpak install flathub -y \
-org.gnome.baobab \ # Disk Usage Analyzer
-org.gnome.Calculator \ # Calculator
-org.gnome.Calendar \ # Calendar
-org.gnome.clocks \ # Clocks
-org.gnome.Contacts \ # Contacts
-org.gnome.Decibels \ # Audio Player
-org.gnome.Firmware \ # Firmware
-org.gnome.Logs \ # Logs
-org.gnome.Loupe \ # Image Viewer
-org.gnome.Maps \ # Maps
-org.gnome.Music \ # Music
-org.gnome.Papers \ # Papers
-org.gnome.SimpleScan \ # Document Scanner
-org.gnome.Snapshot \ # Camera
-org.gnome.SoundRecorder \ # Sound Recorder
-org.gnome.TextEditor \ # Text Editor
-org.gnome.Showtime \ # Video Player
-org.gnome.Weather \ # Weather
-org.gnome.seahorse.Application \ # Passwords and Keys
-org.gnome.font-viewer \ # Font Viewer
-
-io.github.flattool.Ignition \ # Ignition
-page.tesk.Refine \ # Refine
-net.nokyan.Resources \ # Resources
-com.github.johnfactotum.Foliate \  # Foliate 
-org.gnome.World.PikaBackup \ # Pika Backup
-com.mattjakeman.ExtensionManager \ # Extension Manager
-com.github.tchx84.Flatseal \ # Flatseal
-dev.bragefuglseth.Keypunch \ # Keypunch
-com.belmoussaoui.Authenticator \ # Authenticator
-
-
+org.gnome.baobab \
+org.gnome.Calculator \
+org.gnome.Calendar \
+org.gnome.clocks \
+org.gnome.Contacts \
+org.gnome.Decibels \
+org.gnome.Firmware \
+org.gnome.Logs \
+org.gnome.Loupe \
+org.gnome.Maps \
+org.gnome.Music \
+org.gnome.Papers \
+org.gnome.SimpleScan \
+org.gnome.Snapshot \
+org.gnome.SoundRecorder \
+org.gnome.TextEditor \
+org.gnome.Showtime \
+org.gnome.Weather \
+org.gnome.seahorse.Application \
+org.gnome.font-viewer \
+io.github.flattool.Ignition \
+page.tesk.Refine \
+net.nokyan.Resources \
+com.github.johnfactotum.Foliate \ 
+org.gnome.World.PikaBackup \
+com.mattjakeman.ExtensionManager \
+com.github.tchx84.Flatseal \
+dev.bragefuglseth.Keypunch \
+com.belmoussaoui.Authenticator \
+\
+\
 ## Add extra apps
-org.mozilla.firefox \ # Firefox
-org.torproject.torbrowser-launcher \ # Tor Browser
-org.qbittorrent.qBittorrent \ # qBittorrent
-dev.vencord.Vesktop \ # Vesktop
-org.gnome.Fractal \ # Fractal
-org.telegram.desktop \ # Telegram
-org.onlyoffice.desktopeditors \ # OnlyOffice
-md.obsidian.Obsidian \ # Obsidian
-com.obsproject.Studio \ # OBS Studio
-org.localsend.localsend_app \ # LocalSend
-org.libretro.RetroArch \ # RetroArch
-org.kde.krita \ # Krita
-org.kde.kdenlive \ # Kdenlive
-it.mijorus.gearlever \ # Gear Lever
-org.fedoraproject.MediaWriter \ # Media Writer
-com.usebottles.bottles \ # Bottles
-com.ranfdev.DistroShelf # DistroShelf
+org.mozilla.firefox \
+org.torproject.torbrowser-launcher \
+org.qbittorrent.qBittorrent \
+dev.vencord.Vesktop \
+org.gnome.Fractal \
+org.telegram.desktop \
+org.onlyoffice.desktopeditors \
+md.obsidian.Obsidian \
+com.obsproject.Studio \
+org.localsend.localsend_app \
+org.libretro.RetroArch \
+org.kde.krita \
+org.kde.kdenlive \
+it.mijorus.gearlever \
+org.fedoraproject.MediaWriter \
+com.usebottles.bottles \
+com.ranfdev.DistroShelf
