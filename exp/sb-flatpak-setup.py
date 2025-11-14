@@ -10,21 +10,23 @@ class ansi_colors:
     BLUE = "\033[34m"
     RESET = "\033[0m"
 
-def run_command(command):
+def run_command(command, npasswd=""):
     try:
-        print(f"{ansi_colors.GREEN}Running: {command}")
-        print(f"{ansi_colors.RESET}")
-        subproc.run(command, shell=True, check=True)
-    except subproc.CalledProcessError as e:
-        # print(f"{RED}Command failed: {command}", file=sys.stderr)
-        # print(f"{RED}Return code: {e.returncode}", file=sys.stderr)
-        # Ignore errors if command fails (e.g., remote-delete if repo doesn't exist)
-        pass
+        if npasswd == "":
+            print(f"{ansi_colors.GREEN}Running: {command}")
+            subproc.run(command, shell=True, check=True)
+            print(f"{ansi_colors.RESET}")
 
-def run_command_sudo(command, uspasswd):
-    print(f"{ansi_colors.YELLOW}Executing with sudo")
-    full_command = f"echo {uspasswd} | sudo -S {command}"
-    run_command(full_command)
+        else:
+            print(f"{ansi_colors.YELLOW}Running with sudo: {command}")
+            full_command = f"echo {npasswd} | sudo -S {command}"
+            subproc.run(full_command, shell=True, check=True)
+            print(f"{ansi_colors.RESET}")
+
+    except subproc.CalledProcessError as e:
+        print(f"{ansi_colors.RED}Command failed: {command}", file=sys.stderr)
+        print(f"{ansi_colors.RESET}")
+        pass
 
 def tui_runner(stdscr):
     stdscr.clear()
@@ -35,7 +37,7 @@ def tui_runner(stdscr):
 
 def flatpak_repo_rm(repo_info, npasswd=""):
     for repo_name, repo_url in repo_info:
-        run_command_sudo(f"flatpak remote-delete {repo_name}", npasswd)
+        run_command(f"flatpak remote-delete {repo_name}", npasswd)
 
 def flatpak_repo_add(repo_info, whosusing="user", npasswd=""):
     for repo_name, repo_url in repo_info:
@@ -43,7 +45,7 @@ def flatpak_repo_add(repo_info, whosusing="user", npasswd=""):
             run_command(f"flatpak remote-add --user --if-not-exists {repo_name} {repo_url}")
         else:
             if whosusing == "system":
-                run_command_sudo(f"flatpak remote-add --system --if-not-exists {repo_name} {repo_url}", npasswd)
+                run_command(f"flatpak remote-add --system --if-not-exists {repo_name} {repo_url}", npasswd)
 
 def flatpak_app_install(app_list, whosusing="user", repo_name="flathub", npasswd=""):
     app_string = " ".join(app_list)
@@ -52,7 +54,7 @@ def flatpak_app_install(app_list, whosusing="user", repo_name="flathub", npasswd
     else:
         if whosusing == "system":
             if npasswd != "":
-                run_command_sudo(f"flatpak install {repo_name} --system -y " + app_string, npasswd)
+                run_command(f"flatpak install {repo_name} --system -y " + app_string, npasswd)
             else:
                 run_command(f"flatpak install {repo_name} --system -y " + app_string)
 
