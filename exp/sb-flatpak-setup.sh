@@ -39,15 +39,12 @@ org.gnome.font-viewer \
 io.github.flattool.Ignition \
 page.tesk.Refine \
 net.nokyan.Resources \
-com.github.johnfactotum.Foliate \ 
+com.github.johnfactotum.Foliate \
 org.gnome.World.PikaBackup \
 com.mattjakeman.ExtensionManager \
 com.github.tchx84.Flatseal \
 dev.bragefuglseth.Keypunch \
 com.belmoussaoui.Authenticator \
-\
-\
-## Add extra apps
 org.mozilla.firefox \
 org.torproject.torbrowser-launcher \
 org.qbittorrent.qBittorrent \
